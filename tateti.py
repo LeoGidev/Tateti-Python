@@ -25,7 +25,8 @@ running = True
 restart_text = FONT.render("Restart", True, BLACK)
 restart_rect = restart_text.get_rect(center=(WIDTH // 2, 25))
 message_text = ""
-message_rect = None
+message_text_surface = None
+message_rect = pygame.Rect(0, 300, WIDTH, 50)
 
 def draw_board():
     WIN.fill(WHITE)
@@ -45,10 +46,7 @@ def draw_xo():
                 WIN.blit(xo_text, xo_rect)
 
 def check_winner():
-    global winner, message_text, message_rect
-    if message_text:
-        message_text_surface = FONT.render(message_text, True, BLACK)
-        message_rect = message_text_surface.get_rect(center=(WIDTH // 2, 325))
+    global winner, message_text, message_text_surface, message_rect
     for row in range(3):
         if board[row][0] == board[row][1] == board[row][2] != " ":
             winner = board[row][0]
@@ -63,6 +61,9 @@ def check_winner():
         message_text = f"Player {winner} wins!"
     elif all(cell != " " for row in board for cell in row):
         message_text = "It's a tie!"
+    if message_text:
+        message_text_surface = FONT.render(message_text, True, BLACK)
+        message_rect = message_text_surface.get_rect(center=(WIDTH // 2, 325))
 
 def reset_game():
     global board, winner, current_player, message_text
@@ -72,7 +73,7 @@ def reset_game():
     message_text = ""
 
 def main():
-    global current_player, running, message_rect, message_text
+    global current_player, running
 
     while running:
         for event in pygame.event.get():
@@ -98,7 +99,7 @@ def main():
         draw_xo()
         check_winner()
         pygame.draw.rect(WIN, WHITE, message_rect)
-        if message_text:
+        if message_text_surface:
             WIN.blit(message_text_surface, message_rect)
         pygame.draw.rect(WIN, WHITE, (0, 0, WIDTH, 50))
         WIN.blit(restart_text, restart_rect)
@@ -106,8 +107,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
