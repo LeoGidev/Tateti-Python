@@ -7,11 +7,12 @@ pygame.init()
 # Set up the window
 WIDTH, HEIGHT = 300, 300
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("TA TE TI")
+pygame.display.set_caption("Tic Tac Toe")
 
 # Colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+RED = (255, 0, 0)
 
 # Fonts
 FONT = pygame.font.SysFont(None, 50)
@@ -21,6 +22,8 @@ current_player = "X"
 board = [[" " for _ in range(3)] for _ in range(3)]
 winner = None
 running = True
+restart_text = FONT.render("Restart", True, BLACK)
+restart_rect = restart_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50))
 
 def draw_board():
     WIN.fill(WHITE)
@@ -77,15 +80,21 @@ def main():
                         current_player = "O"
                     else:
                         current_player = "X"
+            
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:
+                    reset_game()
 
         draw_board()
         draw_xo()
         check_winner()
         if winner:
-            text = FONT.render(f"Player {winner} wins!", True, BLACK)
+            text = FONT.render(f"Player {winner} wins!", True, RED)
             text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
             WIN.blit(text, text_rect)
+            WIN.blit(restart_text, restart_rect)
         pygame.display.update()
 
 if __name__ == "__main__":
     main()
+
