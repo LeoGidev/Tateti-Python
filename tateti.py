@@ -65,9 +65,9 @@ def check_winner():
     if board[0][2] == board[1][1] == board[2][0] != " ":
         winner = board[0][2]
     if winner:
-        message_text = f"Player {winner} wins!"
+        message_text = f"{winner} Ha ganado!"
     elif all(cell != " " for row in board for cell in row):
-        message_text = "It's a tie!"
+        message_text = "Empate!"
     if message_text:
         message_text_surface = FONT.render(message_text, True, BLACK)
         message_rect = message_text_surface.get_rect(center=(WIDTH // 2, HEIGHT - BAR_HEIGHT // 2))
