@@ -7,7 +7,7 @@ pygame.init()
 # Set up the window
 WIDTH, HEIGHT = 300, 300
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Tic Tac Toe")
+pygame.display.set_caption("TA TE TI")
 
 # Colors
 WHITE = (255, 255, 255)
@@ -22,15 +22,15 @@ current_player = "X"
 board = [[" " for _ in range(3)] for _ in range(3)]
 winner = None
 running = True
-restart_text = FONT.render("Restart", True, BLACK)
+restart_text = FONT.render("Presiona R", True, BLACK)
 restart_rect = restart_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50))
 
 def draw_board():
     WIN.fill(WHITE)
-    # Horizontal lines
+    # Lineas hroizontales
     pygame.draw.line(WIN, BLACK, (0, 100), (300, 100), 2)
     pygame.draw.line(WIN, BLACK, (0, 200), (300, 200), 2)
-    # Vertical lines
+    # Líneas Verticales
     pygame.draw.line(WIN, BLACK, (100, 0), (100, 300), 2)
     pygame.draw.line(WIN, BLACK, (200, 0), (200, 300), 2)
 
