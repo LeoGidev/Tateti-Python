@@ -1,20 +1,20 @@
 import pygame
 import sys
 
-# Initialize Pygame
+# Iniciamos Pygame
 pygame.init()
 
-# Set up the window
+# Seteamos la ventana
 WIDTH, HEIGHT = 300, 300
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("TA TE TI")
 
-# Colors
+# Colores
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 
-# Fonts
+# Fuentes
 FONT = pygame.font.SysFont(None, 50)
 
 # Variables
