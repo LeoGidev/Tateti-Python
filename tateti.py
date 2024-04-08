@@ -7,7 +7,7 @@ pygame.init()
 # Set up the window
 WIDTH, HEIGHT = 300, 300
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Tic Tac Toe")
+pygame.display.set_caption("TA TE TI")
 
 # Colors
 WHITE = (255, 255, 255)
