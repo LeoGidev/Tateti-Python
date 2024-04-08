@@ -5,7 +5,7 @@ import sys
 pygame.init()
 
 # Seteamos la ventana
-WIDTH, HEIGHT = 300, 300
+WIDTH, HEIGHT = 300, 350
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("TA TE TI")
 
@@ -22,8 +22,10 @@ current_player = "X"
 board = [[" " for _ in range(3)] for _ in range(3)]
 winner = None
 running = True
-restart_text = FONT.render("Presiona R", True, BLACK)
-restart_rect = restart_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50))
+restart_text = FONT.render("Restart", True, BLACK)
+restart_rect = restart_text.get_rect(center=(WIDTH // 2, 25))
+message_text = ""
+message_rect = None
 
 def draw_board():
     WIN.fill(WHITE)
@@ -43,7 +45,7 @@ def draw_xo():
                 WIN.blit(xo_text, xo_rect)
 
 def check_winner():
-    global winner
+    global winner, message_text, message_rect
     for row in range(3):
         if board[row][0] == board[row][1] == board[row][2] != " ":
             winner = board[row][0]
@@ -54,12 +56,21 @@ def check_winner():
         winner = board[0][0]
     if board[0][2] == board[1][1] == board[2][0] != " ":
         winner = board[0][2]
+    if winner:
+        message_text = f"Player {winner} wins!"
+    elif all(cell != " " for row in board for cell in row):
+        message_text = "It's a tie!"
+    if message_text:
+        message_text_surface = FONT.render(message_text, True, BLACK)
+        message_rect = message_text_surface.get_rect(center=(WIDTH // 2, 325))
 
 def reset_game():
-    global board, winner, current_player
+    global board, winner, current_player, message_text, message_rect
     board = [[" " for _ in range(3)] for _ in range(3)]
     winner = None
     current_player = "X"
+    message_text = ""
+    message_rect = None
 
 def main():
     global current_player, running
@@ -81,20 +92,18 @@ def main():
                     else:
                         current_player = "X"
             
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_r:
-                    reset_game()
+            if event.type == pygame.MOUSEBUTTONDOWN and restart_rect.collidepoint(event.pos):
+                reset_game()
 
         draw_board()
         draw_xo()
         check_winner()
-        if winner:
-            text = FONT.render(f"Player {winner} wins!", True, RED)
-            text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
-            WIN.blit(text, text_rect)
-            WIN.blit(restart_text, restart_rect)
+        if message_text:
+            WIN.blit(message_text_surface, message_rect)
+        WIN.blit(restart_text, restart_rect)
         pygame.display.update()
 
 if __name__ == "__main__":
     main()
+
 
