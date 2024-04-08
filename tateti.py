@@ -25,7 +25,7 @@ running = True
 restart_text = FONT.render("Restart", True, BLACK)
 restart_rect = restart_text.get_rect(center=(WIDTH // 2, 25))
 message_text = ""
-message_rect = pygame.Rect(0, 300, WIDTH, 50)
+message_rect = None  # Inicializamos message_rect aquí
 
 def draw_board():
     WIN.fill(WHITE)
@@ -60,6 +60,8 @@ def check_winner():
         message_text = f"Player {winner} wins!"
     elif all(cell != " " for row in board for cell in row):
         message_text = "It's a tie!"
+    if message_text:
+        message_rect = message_text_surface.get_rect(center=(WIDTH // 2, 325))
 
 def reset_game():
     global board, winner, current_player, message_text
@@ -69,7 +71,9 @@ def reset_game():
     message_text = ""
 
 def main():
-    global current_player, running
+    global current_player, running, message_rect
+
+    message_rect = pygame.Rect(0, 300, WIDTH, 50)  # Inicializamos message_rect aquí
 
     while running:
         for event in pygame.event.get():
@@ -105,6 +109,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
